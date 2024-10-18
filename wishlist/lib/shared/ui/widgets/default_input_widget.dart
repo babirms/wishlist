@@ -27,18 +27,33 @@ class DefaultInputwWidget extends StatefulWidget {
 }
 
 class _DefaultInputwWidgetState extends State<DefaultInputwWidget> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.onUnfocus != null) {
+      _focusNode.addListener(() {
+        if (!_focusNode.hasFocus) {
+          widget.onUnfocus?.call();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 24),
       child: TextFormField(
-        onTapOutside: (event) {
-          if (widget.onUnfocus != null) {
-            widget.onUnfocus!();
-          }
-
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
+        focusNode: _focusNode,
+        onTapOutside: (event) => _focusNode.unfocus(),
         controller: widget.controller,
         validator: widget.validator,
         onChanged: widget.onChanged,

@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class PageTitleWidget extends StatelessWidget {
   final String title;
   final String? subtitle;
+  final double? titleSize;
+  final double? subtitleSize;
 
   const PageTitleWidget({
     super.key,
     required this.title,
     this.subtitle,
+    this.titleSize,
+    this.subtitleSize,
   });
 
   @override
@@ -17,10 +21,13 @@ class PageTitleWidget extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           title,
-          style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: titleSize ?? 48,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -2),
         ),
         if (subtitle != null)
-          Text(subtitle!, style: const TextStyle(fontSize: 20))
+          Text(subtitle!, style: TextStyle(fontSize: subtitleSize ?? 20))
       ]),
     );
   }

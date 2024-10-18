@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wishlist/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:wishlist/features/auth/presentation/cubit/auth_state.dart';
+import 'package:wishlist/features/auth/presentation/cubit/register/register_cubit.dart';
+import 'package:wishlist/features/auth/presentation/cubit/register/register_state.dart';
 import 'package:wishlist/features/auth/presentation/widgets/password_input_widget.dart';
 import 'package:wishlist/shared/service_injector.dart';
-import 'package:wishlist/shared/ui/widgets/back_button_widget.dart';
+import 'package:wishlist/shared/ui/widgets/buttons/back_button_widget.dart';
 import 'package:wishlist/shared/ui/widgets/default_input_widget.dart';
 import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
-import 'package:wishlist/shared/ui/widgets/primary_button_widget.dart';
+import 'package:wishlist/shared/ui/widgets/buttons/primary_button_widget.dart';
 import 'package:wishlist/shared/validators/email_validator.dart';
 import 'package:wishlist/shared/validators/empty_field_validator.dart';
 import 'package:wishlist/shared/validators/password_validator.dart';
@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
-  final authCubit = Sl.get<AuthCubit>();
+  final registerCubit = Sl.get<RegisterCubit>();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -39,24 +39,33 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocProvider(
-        create: (context) => authCubit,
-        child: BlocListener<AuthCubit, AuthState>(
+        create: (context) => registerCubit,
+        child: BlocListener<RegisterCubit, RegisterState>(
           listener: (context, state) {
-            if (state is AuthSuccess) {
+            if (state is RegisterSuccess) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message)));
-            } else if (state is AuthError) {
+            } else if (state is RegisterError) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.errorMessage)));
             }
           },
-          child: BlocBuilder<AuthCubit, AuthState>(
+          child: BlocBuilder<RegisterCubit, RegisterState>(
             builder: (context, state) {
-              if (state is AuthLoading) {
+              if (state is RegisterLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
 
@@ -114,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           PrimaryButtonWidget(
                             onPressed: isValid
                                 ? () async {
-                                    await authCubit.register(
+                                    await registerCubit.register(
                                       email: emailController.text,
                                       password: passwordController.text,
                                       name: nameController.text,

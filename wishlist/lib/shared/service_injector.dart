@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:wishlist/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart';
-import 'package:wishlist/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:wishlist/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:wishlist/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:wishlist/firebase_options.dart';
 
 final _sl = GetIt.instance;
@@ -33,6 +34,7 @@ mixin Sl {
       AuthRepository(authRemoteDataSource: _sl()),
     );
 
-    _sl.registerSingleton<AuthCubit>(AuthCubit(_sl()));
+    _sl.registerSingleton<LoginCubit>(LoginCubit(_sl()));
+    _sl.registerSingleton<RegisterCubit>(RegisterCubit(_sl()));
   }
 }
