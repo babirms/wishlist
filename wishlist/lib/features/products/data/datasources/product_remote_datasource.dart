@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wishlist/features/products/data/entities/product_entity.dart';
 
-class ProductsRemoteDatasource {
+class ProductRemoteDataSource {
   final FirebaseFirestore _firestore;
 
-  ProductsRemoteDatasource({required FirebaseFirestore firestore})
+  ProductRemoteDataSource({required FirebaseFirestore firestore})
       : _firestore = firestore;
 
   Future<List<ProductEntity>> getAllProducts() async {
