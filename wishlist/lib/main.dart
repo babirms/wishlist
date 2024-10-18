@@ -5,6 +5,7 @@ import 'package:wishlist/features/auth/presentation/cubit/login/login_cubit.dart
 import 'package:wishlist/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:wishlist/features/auth/presentation/pages/login_page.dart';
 import 'package:wishlist/features/auth/presentation/pages/register_page.dart';
+import 'package:wishlist/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:wishlist/shared/service_injector.dart';
 import 'package:wishlist/shared/ui/theme.dart';
 
@@ -33,6 +34,10 @@ class WishlistApp extends StatelessWidget {
         '/register': (context) => BlocProvider(
               create: (context) => RegisterCubit(Sl.get<AuthRepository>()),
               child: const RegisterPage(),
+            ),
+        '/reset-password': (context) => BlocProvider(
+              create: (context) => LoginCubit(Sl.get<AuthRepository>()),
+              child: const ResetPasswordPage(),
             ),
       },
     );

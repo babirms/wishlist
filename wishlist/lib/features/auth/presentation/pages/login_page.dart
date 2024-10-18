@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wishlist/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:wishlist/features/auth/presentation/cubit/login/login_state.dart';
 import 'package:wishlist/features/auth/presentation/widgets/password_input_widget.dart';
+import 'package:wishlist/shared/ui/custom_colors.dart';
 import 'package:wishlist/shared/ui/widgets/buttons/secondary_button_widget.dart';
 
 import 'package:wishlist/shared/ui/widgets/default_input_widget.dart';
@@ -59,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   Form(
                     key: _formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DefaultInputwWidget(
                           controller: emailController,
@@ -74,6 +76,28 @@ class _LoginPageState extends State<LoginPage> {
                               EmptyFieldValidator.validateEmptyField(
                                   passwordController.text),
                         ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            child: InkWell(
+                              onTap: () async {
+                                _formKey.currentState!.reset();
+                                await Navigator.of(context)
+                                    .pushNamed('/reset-password');
+                              },
+                              child: Text(
+                                'Esqueceu sua senha?',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      CustomColors.primaryPink.withOpacity(0.7),
+                                  decorationThickness: 1.5,
+                                  color:
+                                      CustomColors.primaryPink.withOpacity(0.7),
+                                ),
+                              ),
+                            )),
                         const SizedBox(height: 36),
                         PrimaryButtonWidget(
                           onPressed: () async {
