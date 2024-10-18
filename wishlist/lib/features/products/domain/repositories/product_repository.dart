@@ -4,7 +4,7 @@ import 'package:wishlist/features/products/data/entities/product_entity.dart';
 class ProductRepository {
   final ProductRemoteDataSource productRemoteDataSource;
 
-  ProductRepository(this.productRemoteDataSource);
+  ProductRepository({required this.productRemoteDataSource});
 
   Future<List<ProductEntity>> getAllProducts() async {
     return productRemoteDataSource.getAllProducts();

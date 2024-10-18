@@ -29,11 +29,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is LoginSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Logou com sucesso meu parça 😎')));
-            // Navegar para a próxima tela
+            await Navigator.of(context).popAndPushNamed('/products-list');
           } else if (state is LoginError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));
