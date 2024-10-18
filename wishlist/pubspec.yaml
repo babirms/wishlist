@@ -11,10 +11,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bloc: ^8.1.4
+  build_runner: ^2.4.13
   crypto: ^3.0.6
   cupertino_icons: ^1.0.8
   dio: ^5.7.0
+  equatable: ^2.0.5
   flutter_bloc: ^8.1.6
+  json_annotation: ^4.9.0
+  json_serializable: ^6.8.0
 
 dev_dependencies:
   flutter_test:
