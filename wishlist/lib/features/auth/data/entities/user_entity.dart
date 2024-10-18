@@ -1,25 +1,31 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-part 'user_entity.g.dart';
-
-@JsonSerializable()
 class UserEntity {
-  final DateTime createdAt;
+  final Timestamp createdAt;
   final String name;
   final String email;
-  final String password;
   final String id;
 
   UserEntity({
     required this.createdAt,
     required this.name,
     required this.email,
-    required this.password,
     required this.id,
   });
 
-  factory UserEntity.fromJson(Map<String, dynamic> json) =>
-      _$UserEntityFromJson(json);
+  factory UserEntity.fromJson(Map<String, dynamic> json) {
+    return UserEntity(
+      createdAt: json['createdAt'],
+      name: json['name'] as String,
+      email: json['email'] as String,
+      id: json['id'] as String,
+    );
+  }
 
-  Map<String, dynamic> toJson() => _$UserEntityToJson(this);
+  Map<String, dynamic> toJson() => {
+        'createdAt': createdAt,
+        'name': name,
+        'email': email,
+        'id': id,
+      };
 }

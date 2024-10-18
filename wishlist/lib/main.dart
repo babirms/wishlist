@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart';
+import 'package:wishlist/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:wishlist/features/auth/presentation/cubit/register/register_cubit.dart';
 import 'package:wishlist/features/auth/presentation/pages/login_page.dart';
+import 'package:wishlist/features/auth/presentation/pages/register_page.dart';
 import 'package:wishlist/shared/service_injector.dart';
 import 'package:wishlist/shared/ui/theme.dart';
 
@@ -20,7 +25,16 @@ class WishlistApp extends StatelessWidget {
         colorScheme: MaterialTheme.lightScheme().toColorScheme(),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      routes: {
+        '/': (context) => BlocProvider(
+              create: (context) => LoginCubit(Sl.get<AuthRepository>()),
+              child: const LoginPage(),
+            ),
+        '/register': (context) => BlocProvider(
+              create: (context) => RegisterCubit(Sl.get<AuthRepository>()),
+              child: const RegisterPage(),
+            ),
+      },
     );
   }
 }

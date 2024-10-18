@@ -20,7 +20,6 @@ class AuthRepository {
 
   Future<UserEntity> login(
       {required String email, required String password}) async {
-    /// Realiza o login no FirebaseAuth
     final success = await authRemoteDataSource.loginWithEmailAndPassword(
       email: email,
       password: password,

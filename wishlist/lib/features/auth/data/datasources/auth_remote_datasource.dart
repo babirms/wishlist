@@ -74,6 +74,7 @@ class AuthRemoteDataSource {
       if (querySnapshot.docs.isNotEmpty) {
         final userData =
             querySnapshot.docs.first.data() as Map<String, dynamic>;
+
         return UserEntity.fromJson(userData);
       } else {
         return null;
