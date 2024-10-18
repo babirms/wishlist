@@ -30,7 +30,8 @@ class AuthCubit extends Cubit<AuthState> {
       );
       emit(AuthSuccess('Usuário cadastrado com sucesso!'));
     } catch (e) {
-      emit(AuthError('Erro ao cadastrar usuário: $e'));
+      emit(AuthError(
+          'Ocorreu um erro ao cadastrar o usuário. Por favor, tente novamente.'));
     }
   }
 

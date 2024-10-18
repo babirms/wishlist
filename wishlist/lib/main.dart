@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wishlist/features/auth/presentation/pages/register_page.dart';
 import 'package:wishlist/shared/service_injector.dart';
-import 'package:wishlist/shared/theme.dart';
+import 'package:wishlist/shared/ui/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class WishlistApp extends StatelessWidget {
         colorScheme: MaterialTheme.lightScheme().toColorScheme(),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: RegisterPage(),
     );
   }
 }
