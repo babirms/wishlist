@@ -1,5 +1,5 @@
-import 'package:wishlist/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:wishlist/auth/data/entities/user_entity.dart';
+import 'package:wishlist/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:wishlist/features/auth/data/entities/user_entity.dart';
 
 class AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;

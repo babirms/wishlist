@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:wishlist/auth/domain/repositories/auth_repository.dart';
-import 'package:wishlist/auth/presentation/cubit/auth_state.dart';
+import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart';
+import 'package:wishlist/features/auth/presentation/cubit/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepository authRepository;
