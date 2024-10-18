@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1032915521626",
+    "project_id": "wishlist-cabcd",
+    "storage_bucket": "wishlist-cabcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032915521626:android:94920b3f9c1fdfa457c863",
+        "android_client_info": {
+          "package_name": "com.example.wishlist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB72GqZJYcCoc2DwOhBXQzqeFRFmYhf4Mw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
