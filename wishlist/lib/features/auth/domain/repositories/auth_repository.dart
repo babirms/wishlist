@@ -40,4 +40,8 @@ class AuthRepository {
   Future<void> sendPasswordResetEmail({required String email}) async {
     return await authRemoteDataSource.sendPasswordResetEmail(email: email);
   }
+
+  Future<void> logout() async {
+    return await authRemoteDataSource.logout();
+  }
 }

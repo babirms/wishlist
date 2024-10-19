@@ -83,4 +83,12 @@ class AuthRemoteDataSource {
       throw Exception('Erro ao buscar usuário pelo email: $e');
     }
   }
+
+  Future<void> logout() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      throw Exception('Erro ao realizar o logout: $e');
+    }
+  }
 }

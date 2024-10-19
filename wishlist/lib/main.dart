@@ -8,7 +8,7 @@ import 'package:wishlist/features/auth/presentation/pages/register_page.dart';
 import 'package:wishlist/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:wishlist/features/products/domain/repositories/product_repository.dart';
 import 'package:wishlist/features/products/presentation/cubit/product_cubit.dart';
-import 'package:wishlist/features/products/presentation/pages/home_page.dart';
+import 'package:wishlist/features/home/presentation/pages/home_page.dart';
 import 'package:wishlist/shared/service_injector.dart';
 import 'package:wishlist/shared/ui/theme.dart';
 

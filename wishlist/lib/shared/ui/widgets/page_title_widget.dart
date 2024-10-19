@@ -5,6 +5,7 @@ class PageTitleWidget extends StatelessWidget {
   final String? subtitle;
   final double? titleSize;
   final double? subtitleSize;
+  final EdgeInsetsGeometry? margin;
 
   const PageTitleWidget({
     super.key,
@@ -12,12 +13,13 @@ class PageTitleWidget extends StatelessWidget {
     this.subtitle,
     this.titleSize,
     this.subtitleSize,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 24),
+      margin: margin ?? const EdgeInsets.symmetric(vertical: 24),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           title,
