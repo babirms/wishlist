@@ -8,7 +8,7 @@ import 'package:wishlist/features/auth/presentation/pages/register_page.dart';
 import 'package:wishlist/features/auth/presentation/pages/reset_password_page.dart';
 import 'package:wishlist/features/products/domain/repositories/product_repository.dart';
 import 'package:wishlist/features/products/presentation/cubit/product_cubit.dart';
-import 'package:wishlist/features/products/presentation/pages/product_list_page.dart';
+import 'package:wishlist/features/products/presentation/pages/home_page.dart';
 import 'package:wishlist/shared/service_injector.dart';
 import 'package:wishlist/shared/ui/theme.dart';
 
@@ -29,8 +29,9 @@ class WishlistApp extends StatelessWidget {
         colorScheme: MaterialTheme.lightScheme().toColorScheme(),
         useMaterial3: true,
       ),
+      initialRoute: '/home',
       routes: {
-        '/products-list': (context) => BlocProvider(
+        '/login': (context) => BlocProvider(
               create: (context) => LoginCubit(Sl.get<AuthRepository>()),
               child: const LoginPage(),
             ),
@@ -42,9 +43,9 @@ class WishlistApp extends StatelessWidget {
               create: (context) => LoginCubit(Sl.get<AuthRepository>()),
               child: const ResetPasswordPage(),
             ),
-        '/': (context) => BlocProvider(
+        '/home': (context) => BlocProvider(
               create: (context) => ProductCubit(Sl.get<ProductRepository>()),
-              child: const ProductListPage(),
+              child: const HomePage(),
             ),
       },
     );
