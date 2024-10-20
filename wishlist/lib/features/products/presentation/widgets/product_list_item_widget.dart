@@ -18,18 +18,18 @@ class ProductListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      title: Text(title),
-      subtitle: subtitle != null ? Text(subtitle!) : null,
-      trailing: IconButton(
-        icon: Icon(
+    return InkWell(
+      onTap: onPressed,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+        title: Text(title),
+        subtitle: subtitle != null ? Text(subtitle!) : null,
+        trailing: Icon(
           isSelected ? Icons.favorite_rounded : Icons.favorite_border_rounded,
           color: alreadyExists!
               ? CustomColors.terciaryGreen02
               : CustomColors.primaryPink,
         ),
-        onPressed: onPressed,
       ),
     );
   }
