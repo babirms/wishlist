@@ -46,6 +46,7 @@ class _ProductListPageState extends State<ProductListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: selectedItems.isNotEmpty
           ? FloatingActionButton.extended(
               onPressed: () {
@@ -137,6 +138,7 @@ class _ProductListPageState extends State<ProductListPage> {
                   ),
                 ));
               }),
+              if (selectedItems.isNotEmpty) const SizedBox(height: 70)
             ],
           ),
         ),

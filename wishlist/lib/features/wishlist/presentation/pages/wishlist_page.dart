@@ -49,6 +49,7 @@ class _WishlistPageState extends State<WishlistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: selectedItems.isNotEmpty
           ? FloatingActionButton.extended(
               onPressed: () {
@@ -168,6 +169,7 @@ class _WishlistPageState extends State<WishlistPage> {
                   );
                 },
               ),
+              if (selectedItems.isNotEmpty) const SizedBox(height: 70)
             ],
           ),
         ),
