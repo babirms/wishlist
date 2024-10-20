@@ -34,6 +34,7 @@ class DefaultListTitleWidget extends StatelessWidget {
               leading: leading,
               tileColor: tileColor,
               title: Text(title),
+              subtitle: subtitle != null ? Text(subtitle!) : null,
               trailing: trailing),
         ),
         if (hasDivider!) const Divider()
