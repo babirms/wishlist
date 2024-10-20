@@ -15,7 +15,10 @@ class WishlistEntity {
     return WishlistEntity(
       id: json['id'],
       userId: json['userId'],
-      productList: List<ProductEntity>.from(json['productList']),
+      productList: (json['productList'] as List)
+          .map((productJson) =>
+              ProductEntity.fromJson(productJson as Map<String, dynamic>))
+          .toList(),
     );
   }
 
@@ -23,7 +26,7 @@ class WishlistEntity {
     return {
       'id': id,
       'userId': userId,
-      'productList': productList,
+      'productList': productList.map((product) => product.toJson()).toList(),
     };
   }
 }

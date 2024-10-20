@@ -7,6 +7,7 @@ class WarningWidget extends StatelessWidget {
   final String message;
   final String? buttonText;
   final Function()? onPrimaryTapped;
+  final EdgeInsetsGeometry? margin;
 
   const WarningWidget({
     super.key,
@@ -15,12 +16,13 @@ class WarningWidget extends StatelessWidget {
     required this.message,
     this.onPrimaryTapped,
     this.buttonText,
+    this.margin,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: margin ?? const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,6 +35,7 @@ class WarningWidget extends StatelessWidget {
           Text(
             message,
             style: const TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
           if (buttonText != null && onPrimaryTapped != null)

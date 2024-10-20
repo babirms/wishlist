@@ -5,7 +5,9 @@ import 'package:wishlist/features/products/presentation/cubit/product_cubit.dart
 import 'package:wishlist/features/products/presentation/cubit/product_state.dart';
 import 'package:wishlist/features/products/presentation/widgets/product_list_item_widget.dart';
 import 'package:wishlist/features/products/presentation/widgets/product_on_wishlist_widget.dart';
+import 'package:wishlist/features/wishlist/data/entities/wishlist_entity.dart';
 import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
+import 'package:wishlist/shared/ui/widgets/warnings/error_warning_widget.dart';
 
 class ProductListPage extends StatefulWidget {
   final String userId;
@@ -20,7 +22,7 @@ class _ProductListPageState extends State<ProductListPage> {
   final List<ProductEntity> selectedItems = [];
 
   List<ProductEntity> allProducts = [];
-  List<ProductEntity> currentWishlistProducts = [];
+  late WishlistEntity currentWishlist;
 
   void toggleSelection(ProductEntity item) {
     setState(() {
@@ -46,6 +48,15 @@ class _ProductListPageState extends State<ProductListPage> {
       floatingActionButton: selectedItems.isNotEmpty
           ? FloatingActionButton.extended(
               onPressed: () {
+                /// Adiciona os itens selecionados a [currentWishlist]
+                currentWishlist.productList.addAll(selectedItems);
+
+                /// Atualiza a wishlist no Firestore
+                context
+                    .read<ProductCubit>()
+                    .addProductToWishlist(wishlist: currentWishlist);
+
+                /// Exibe mensagem de sucesso
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
@@ -66,33 +77,38 @@ class _ProductListPageState extends State<ProductListPage> {
           if (state is ProductSuccess) {
             setState(() {
               allProducts = state.allProductList;
-              currentWishlistProducts = state.userWishlistProductsList;
+              currentWishlist = state.userWishlist;
+            });
+          } else if (state is UpdatedWishlistProductsSuccess) {
+            setState(() {
+              currentWishlist = state.userWishlist;
             });
           }
         },
-        child:
-            BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
-          if (state is ProductLoading) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is ProductSuccess) {
-            return Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 36),
-                  const PageTitleWidget(
-                    title: 'Bem-vindo',
-                    subtitle: 'Produtos disponíveis',
-                  ),
-                  Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 36),
+              const PageTitleWidget(
+                title: 'Bem-vindo',
+                subtitle: 'Produtos disponíveis',
+              ),
+              BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ProductSuccess ||
+                    state is UpdatedWishlistProductsSuccess) {
+                  return Expanded(
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       itemCount: allProducts.length,
                       itemBuilder: (context, index) {
-                        if (currentWishlistProducts
-                            .contains(allProducts[index])) {
+                        if (currentWishlist.productList.any((product) =>
+                            product.id.contains(allProducts[index].id))) {
                           return ProductOnWishlistWidget(
                             title: allProducts[index].name,
                           );
@@ -107,14 +123,20 @@ class _ProductListPageState extends State<ProductListPage> {
                         }
                       },
                     ),
+                  );
+                } else if (state is ProductInitial) {
+                  return Container();
+                }
+                return const Expanded(
+                    child: Center(
+                  child: ErrorWarningWidget(
+                    margin: EdgeInsets.zero,
                   ),
-                ],
-              ),
-            );
-          }
-
-          return Container();
-        }),
+                ));
+              }),
+            ],
+          ),
+        ),
       ),
     );
   }

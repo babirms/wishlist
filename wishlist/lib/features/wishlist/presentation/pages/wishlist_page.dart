@@ -78,28 +78,30 @@ class _WishlistPageState extends State<WishlistPage> {
                     return const Expanded(
                         child: Center(child: CircularProgressIndicator()));
                   } else if (state is WishlistLoadedSuccess) {
-                    Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: state.wishlist.productList.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            title: Text(state.wishlist.productList[index].name),
-                          );
-                        },
-                      ),
-                    );
-                  } else if (state is WishlistError) {
-                    return const Expanded(
-                      child: ErrorWarningWidget(),
-                    );
+                    if (state.wishlist.productList.isEmpty) {
+                      return Expanded(
+                        child: EmptyWishlistWidget(
+                          onAddItemPressed: widget.onAddItemPressed,
+                        ),
+                      );
+                    } else {
+                      return Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: state.wishlist.productList.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title:
+                                  Text(state.wishlist.productList[index].name),
+                            );
+                          },
+                        ),
+                      );
+                    }
                   }
-
-                  return Expanded(
-                    child: EmptyWishlistWidget(
-                      onAddItemPressed: widget.onAddItemPressed,
-                    ),
+                  return const Expanded(
+                    child: ErrorWarningWidget(),
                   );
                 },
               ),
