@@ -19,6 +19,8 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
+  bool showEditButton = false;
+
   @override
   void initState() {
     super.initState();
@@ -39,6 +41,10 @@ class _WishlistPageState extends State<WishlistPage> {
             /// Exibe snackbar de erro
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          } else if (state is WishlistLoading) {
+            setState(() {
+              showEditButton = true;
+            });
           }
         },
         child: Padding(
@@ -53,17 +59,18 @@ class _WishlistPageState extends State<WishlistPage> {
                   title: 'Minha Lista',
                   subtitle: 'Lista de desejos',
                 ),
-                IconButton(
-                    style: IconButton.styleFrom(
-                      backgroundColor: CustomColors.primaryPink,
-                    ),
-                    onPressed: () {
-                      print('ao vivo editando a minha lista');
-                    },
-                    icon: const Icon(
-                      Icons.edit_outlined,
-                      color: Colors.white,
-                    ))
+                if (showEditButton)
+                  IconButton(
+                      style: IconButton.styleFrom(
+                        backgroundColor: CustomColors.primaryPink,
+                      ),
+                      onPressed: () {
+                        print('ao vivo editando a minha lista');
+                      },
+                      icon: const Icon(
+                        Icons.edit_outlined,
+                        color: Colors.white,
+                      ))
               ]),
               BlocBuilder<WishlistCubit, WishlistState>(
                 builder: (context, state) {

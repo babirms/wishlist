@@ -9,10 +9,13 @@ class WishlistRemoteDataSource {
 
   Future<WishlistEntity> getWishlistFromUserId({required String userId}) async {
     try {
-      final wishlist = await firestore.collection('wishlist').doc(userId).get();
+      final wishlists = await firestore
+          .collection('wishlist')
+          .where('userId', isEqualTo: userId)
+          .get();
 
-      if (wishlist.exists) {
-        return WishlistEntity.fromJson(wishlist.data() as Map<String, dynamic>);
+      if (wishlists.docs.isNotEmpty) {
+        return WishlistEntity.fromJson(wishlists.docs.first.data());
       } else {
         return await createWishlist(userId: userId);
       }

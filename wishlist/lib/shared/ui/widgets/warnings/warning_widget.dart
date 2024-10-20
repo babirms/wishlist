@@ -28,11 +28,11 @@ class WarningWidget extends StatelessWidget {
           icon,
           Text(title,
               style:
-                  const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Text(
             message,
-            style: const TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 20),
           ),
           const SizedBox(height: 24),
           if (buttonText != null && onPrimaryTapped != null)
