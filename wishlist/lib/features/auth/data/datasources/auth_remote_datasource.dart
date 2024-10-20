@@ -107,7 +107,7 @@ class AuthRemoteDataSource {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
     } catch (e) {
-      throw Exception('Erro ao enviar e-mail de recuperação de senha: $e');
+      throw PasswordResetFailedException();
     }
   }
 

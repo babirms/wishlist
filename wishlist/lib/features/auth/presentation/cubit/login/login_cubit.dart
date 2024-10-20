@@ -18,7 +18,8 @@ class LoginCubit extends Cubit<LoginState> {
       if (e is InvalidCredentialException) {
         emit(LoginInvalidCredentialsError(e.message));
       } else {
-        emit(LoginError('Erro ao fazer login: $e'));
+        emit(LoginError(
+            'Ocorreu um erro ao tentar realizar o login. Por favor, tente novamente mais tarde.'));
       }
     }
   }
@@ -29,7 +30,8 @@ class LoginCubit extends Cubit<LoginState> {
       await authRepository.sendPasswordResetEmail(email: email);
       emit(ResetPasswordSuccess('Email de recuperação enviado com sucesso!'));
     } catch (e) {
-      emit(ResetPasswordError('Erro ao recuperar senha: $e'));
+      emit(ResetPasswordError(
+          'Ocorreu um erro ao tentar enviar o email de recuperação de senha. Por favor, tente novamente mais tarde.'));
     }
   }
 }
