@@ -8,6 +8,7 @@ import 'package:wishlist/features/auth/data/datasources/auth_remote_datasource.d
 import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart';
 import 'package:wishlist/features/products/data/datasources/product_remote_datasource.dart';
 import 'package:wishlist/features/products/domain/repositories/product_repository.dart';
+import 'package:wishlist/features/wishlist/data/datasources/wishlist_remote_datasource.dart';
 import 'package:wishlist/firebase_options.dart';
 
 final _sl = GetIt.instance;
@@ -28,6 +29,7 @@ mixin Sl {
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
+    /// Fluxo de autenticação
     _sl.registerSingleton<AuthLocalDatasource>(
         AuthLocalDatasource(sharedPreferences: sharedPreferences));
 
@@ -45,11 +47,17 @@ mixin Sl {
       ),
     );
 
+    /// Produtos
     _sl.registerSingleton<ProductRemoteDataSource>(
       ProductRemoteDataSource(firestore: firestore),
     );
     _sl.registerSingleton<ProductRepository>(
       ProductRepository(productRemoteDataSource: _sl()),
+    );
+
+    /// Lista de desejos
+    _sl.registerSingleton<WishlistRemoteDataSource>(
+      WishlistRemoteDataSource(firestore: firestore),
     );
   }
 }
