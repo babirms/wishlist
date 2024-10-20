@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wishlist/features/auth/data/entities/user_entity.dart';
 
 abstract class RegisterState extends Equatable {
   @override
@@ -10,12 +11,12 @@ class RegisterInitial extends RegisterState {}
 class RegisterLoading extends RegisterState {}
 
 class RegisterSuccess extends RegisterState {
-  final String message;
+  final UserEntity user;
 
-  RegisterSuccess(this.message);
+  RegisterSuccess(this.user);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [user];
 }
 
 class RegisterError extends RegisterState {

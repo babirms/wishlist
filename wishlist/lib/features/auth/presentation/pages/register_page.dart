@@ -53,6 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state is RegisterSuccess) {
             await Navigator.of(context).pushNamedAndRemoveUntil(
               '/home',
+              arguments: state.user,
               (Route<dynamic> route) => false,
             );
           } else if (state is RegisterError) {

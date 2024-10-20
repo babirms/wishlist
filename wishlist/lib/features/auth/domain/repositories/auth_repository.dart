@@ -11,7 +11,7 @@ class AuthRepository {
     required this.localDatasource,
   });
 
-  Future<void> signUpWithEmailAndPassword({
+  Future<UserEntity> signUpWithEmailAndPassword({
     required String email,
     required String password,
     required String name,

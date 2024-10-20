@@ -18,7 +18,7 @@ class AuthRemoteDataSource {
     required this.productLocalDataSource,
   });
 
-  Future<void> signUpWithEmailAndPassword({
+  Future<UserEntity> signUpWithEmailAndPassword({
     required String email,
     required String password,
     required String name,
@@ -44,6 +44,10 @@ class AuthRemoteDataSource {
 
         /// Salva o usuário localmente
         await localDatasource.saveLocalUser(user: user);
+
+        return user;
+      } else {
+        throw Exception('Erro ao criar usuário');
       }
     } catch (e) {
       throw Exception('Erro ao criar usuário: $e');

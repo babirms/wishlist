@@ -13,12 +13,12 @@ class RegisterCubit extends Cubit<RegisterState> {
       required String name}) async {
     emit(RegisterLoading());
     try {
-      await authRepository.signUpWithEmailAndPassword(
+      final registeredUser = await authRepository.signUpWithEmailAndPassword(
         email: email,
         password: password,
         name: name,
       );
-      emit(RegisterSuccess('Usuário cadastrado com sucesso!'));
+      emit(RegisterSuccess(registeredUser));
     } catch (e) {
       emit(RegisterError(
           'Ocorreu um erro ao cadastrar o usuário. Por favor, tente novamente.'));
