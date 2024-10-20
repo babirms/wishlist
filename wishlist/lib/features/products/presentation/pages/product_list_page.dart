@@ -6,6 +6,7 @@ import 'package:wishlist/features/products/presentation/cubit/product_state.dart
 import 'package:wishlist/features/products/presentation/widgets/product_list_item_widget.dart';
 import 'package:wishlist/features/products/presentation/widgets/product_on_wishlist_widget.dart';
 import 'package:wishlist/features/wishlist/data/entities/wishlist_entity.dart';
+import 'package:wishlist/shared/ui/custom_colors.dart';
 import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
 import 'package:wishlist/shared/ui/widgets/warnings/error_warning_widget.dart';
 
@@ -70,6 +71,7 @@ class _ProductListPageState extends State<ProductListPage> {
               label: Text(
                   'Adicionar a lista de desejos (${selectedItems.length})'),
               icon: const Icon(Icons.check),
+              backgroundColor: CustomColors.primaryPink02,
             )
           : null,
       body: BlocListener<ProductCubit, ProductState>(
