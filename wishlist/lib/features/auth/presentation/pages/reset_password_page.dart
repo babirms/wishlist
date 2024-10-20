@@ -4,8 +4,8 @@ import 'package:wishlist/features/auth/presentation/cubit/login/login_cubit.dart
 import 'package:wishlist/features/auth/presentation/cubit/login/login_state.dart';
 import 'package:wishlist/shared/ui/widgets/buttons/back_button_widget.dart';
 import 'package:wishlist/shared/ui/widgets/buttons/primary_button_widget.dart';
-import 'package:wishlist/shared/ui/widgets/default_input_widget.dart';
-import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
+import 'package:wishlist/shared/ui/widgets/inputs/default_input_widget.dart';
+import 'package:wishlist/shared/ui/widgets/texts/page_title_widget.dart';
 import 'package:wishlist/shared/validators/email_validator.dart';
 
 class ResetPasswordPage extends StatefulWidget {

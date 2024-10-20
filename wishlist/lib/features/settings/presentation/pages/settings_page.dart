@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wishlist/features/auth/presentation/widgets/logout_dialog_widget.dart';
-import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
+import 'package:wishlist/shared/ui/widgets/texts/page_title_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

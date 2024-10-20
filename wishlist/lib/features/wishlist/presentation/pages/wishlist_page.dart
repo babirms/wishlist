@@ -7,7 +7,7 @@ import 'package:wishlist/features/wishlist/presentation/cubit/wishlist_state.dar
 import 'package:wishlist/features/wishlist/presentation/widgets/empty_wishlist_widget.dart';
 import 'package:wishlist/features/wishlist/presentation/widgets/wishlist_item_widget.dart';
 import 'package:wishlist/shared/ui/custom_colors.dart';
-import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
+import 'package:wishlist/shared/ui/widgets/texts/page_title_widget.dart';
 import 'package:wishlist/shared/ui/widgets/warnings/error_warning_widget.dart';
 
 class WishlistPage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wishlist/shared/ui/widgets/default_input_widget.dart';
+import 'package:wishlist/shared/ui/widgets/inputs/default_input_widget.dart';
 
 class PasswordInputWidget extends StatefulWidget {
   final String label;

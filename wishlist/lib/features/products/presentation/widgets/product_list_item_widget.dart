@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wishlist/shared/ui/custom_colors.dart';
+import 'package:wishlist/shared/ui/widgets/cards/default_list_title_widget.dart';
 
 class ProductListItemWidget extends StatelessWidget {
   final Function()? onPressed;
@@ -18,18 +19,16 @@ class ProductListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-        title: Text(title),
-        subtitle: subtitle != null ? Text(subtitle!) : null,
-        trailing: Icon(
-          isSelected ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-          color: alreadyExists!
-              ? CustomColors.terciaryGreen02
-              : CustomColors.primaryPink,
-        ),
+    return DefaultListTitleWidget(
+      onPressed: onPressed,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+      title: title,
+      subtitle: subtitle,
+      trailing: Icon(
+        isSelected ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+        color: alreadyExists!
+            ? CustomColors.terciaryGreen02
+            : CustomColors.primaryPink,
       ),
     );
   }
