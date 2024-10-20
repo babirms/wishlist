@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
         },
         child: BlocBuilder<RegisterCubit, RegisterState>(
           builder: (context, state) {
-            if (state is RegisterLoading) {
+            if (state is RegisterLoading || state is RegisterSuccess) {
               return const Center(child: CircularProgressIndicator());
             }
 

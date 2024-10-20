@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, state) {
-            if (state is LoginLoading) {
+            if (state is LoginLoading || state is LoginSuccess) {
               return const Center(child: CircularProgressIndicator());
             }
 

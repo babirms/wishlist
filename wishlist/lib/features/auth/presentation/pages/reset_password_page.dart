@@ -43,7 +43,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           }
         },
         child: BlocBuilder<LoginCubit, LoginState>(builder: (context, state) {
-          if (state is ResetPasswordLoading) {
+          if (state is ResetPasswordLoading || state is ResetPasswordSuccess) {
             return const Center(child: CircularProgressIndicator());
           }
           return Padding(
