@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wishlist/features/products/presentation/pages/product_list_page.dart';
 import 'package:wishlist/features/settings/presentation/pages/settings_page.dart';
+import 'package:wishlist/features/wishlist/presentation/pages/wishlist_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
               /// Caso selecione o item "Minha lista"
               : _currentIndex == 1
-                  ? Container()
+                  ? const WishlistPage()
 
                   /// Caso selecione o item "Configurações"
                   : const SettingsPage(),
