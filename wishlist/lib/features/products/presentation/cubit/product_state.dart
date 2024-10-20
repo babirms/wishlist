@@ -11,12 +11,13 @@ class ProductInitial extends ProductState {}
 class ProductLoading extends ProductState {}
 
 class ProductSuccess extends ProductState {
-  final List<ProductEntity> productList;
+  final List<ProductEntity> allProductList;
+  final List<ProductEntity> userWishlistProductsList;
 
-  ProductSuccess(this.productList);
+  ProductSuccess(this.allProductList, this.userWishlistProductsList);
 
   @override
-  List<Object?> get props => [productList];
+  List<Object?> get props => [allProductList, userWishlistProductsList];
 }
 
 class ProductError extends ProductState {

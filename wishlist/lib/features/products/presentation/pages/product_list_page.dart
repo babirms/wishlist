@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wishlist/features/products/data/entities/product_entity.dart';
 import 'package:wishlist/features/products/presentation/cubit/product_cubit.dart';
 import 'package:wishlist/features/products/presentation/cubit/product_state.dart';
-import 'package:wishlist/shared/ui/custom_colors.dart';
+import 'package:wishlist/features/products/presentation/widgets/product_list_item_widget.dart';
+import 'package:wishlist/features/products/presentation/widgets/product_on_wishlist_widget.dart';
 import 'package:wishlist/shared/ui/widgets/page_title_widget.dart';
 
 class ProductListPage extends StatefulWidget {
-  const ProductListPage({super.key});
+  final String userId;
+
+  const ProductListPage({super.key, required this.userId});
 
   @override
   State<StatefulWidget> createState() => _ProductListPageState();
@@ -15,6 +18,9 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   final List<ProductEntity> selectedItems = [];
+
+  List<ProductEntity> allProducts = [];
+  List<ProductEntity> currentWishlistProducts = [];
 
   void toggleSelection(ProductEntity item) {
     setState(() {
@@ -30,7 +36,7 @@ class _ProductListPageState extends State<ProductListPage> {
   void initState() {
     super.initState();
 
-    context.read<ProductCubit>().getProductsList();
+    context.read<ProductCubit>().getProductsList(userId: widget.userId);
   }
 
   @override
@@ -56,7 +62,14 @@ class _ProductListPageState extends State<ProductListPage> {
             )
           : null,
       body: BlocListener<ProductCubit, ProductState>(
-        listener: (context, state) async {},
+        listener: (context, state) async {
+          if (state is ProductSuccess) {
+            setState(() {
+              allProducts = state.allProductList;
+              currentWishlistProducts = state.userWishlistProductsList;
+            });
+          }
+        },
         child:
             BlocBuilder<ProductCubit, ProductState>(builder: (context, state) {
           if (state is ProductLoading) {
@@ -76,22 +89,22 @@ class _ProductListPageState extends State<ProductListPage> {
                   Expanded(
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
-                      itemCount: state.productList.length,
+                      itemCount: allProducts.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(state.productList[index].name),
-                          trailing: IconButton(
-                            icon: Icon(
-                              selectedItems.contains(state.productList[index])
-                                  ? Icons.favorite_rounded
-                                  : Icons.favorite_border_rounded,
-                              color: CustomColors.primaryPink,
-                            ),
+                        if (currentWishlistProducts
+                            .contains(allProducts[index])) {
+                          return ProductOnWishlistWidget(
+                            title: allProducts[index].name,
+                          );
+                        } else {
+                          return ProductListItemWidget(
+                            title: allProducts[index].name,
+                            isSelected:
+                                selectedItems.contains(allProducts[index]),
                             onPressed: () =>
-                                toggleSelection(state.productList[index]),
-                          ),
-                        );
+                                toggleSelection(allProducts[index]),
+                          );
+                        }
                       },
                     ),
                   ),

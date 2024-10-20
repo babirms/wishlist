@@ -41,8 +41,10 @@ class WishlistApp extends StatelessWidget {
             builder: (context) => MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (context) =>
-                      ProductCubit(Sl.get<ProductRepository>()),
+                  create: (context) => ProductCubit(
+                    Sl.get<ProductRepository>(),
+                    Sl.get<WishlistRepository>(),
+                  ),
                 ),
                 BlocProvider(
                   create: (context) =>

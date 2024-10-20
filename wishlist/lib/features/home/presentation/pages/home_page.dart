@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
           /// Caso selecione o item "Produtos"
           _currentIndex == 0
-              ? const ProductListPage()
+              ? ProductListPage(userId: widget.user.id)
 
               /// Caso selecione o item "Minha lista"
               : _currentIndex == 1
