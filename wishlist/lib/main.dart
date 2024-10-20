@@ -9,6 +9,8 @@ import 'package:wishlist/features/auth/presentation/pages/reset_password_page.da
 import 'package:wishlist/features/products/domain/repositories/product_repository.dart';
 import 'package:wishlist/features/products/presentation/cubit/product_cubit.dart';
 import 'package:wishlist/features/home/presentation/pages/home_page.dart';
+import 'package:wishlist/features/splash/presentation/cubit/splash_cubit.dart';
+import 'package:wishlist/features/splash/presentation/pages/splash_page.dart';
 import 'package:wishlist/shared/service_injector.dart';
 import 'package:wishlist/shared/ui/theme.dart';
 
@@ -29,8 +31,12 @@ class WishlistApp extends StatelessWidget {
         colorScheme: MaterialTheme.lightScheme().toColorScheme(),
         useMaterial3: true,
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
+        '/': (context) => BlocProvider(
+              create: (context) => SplashCubit(Sl.get<AuthRepository>()),
+              child: const SplashPage(),
+            ),
         '/login': (context) => BlocProvider(
               create: (context) => LoginCubit(Sl.get<AuthRepository>()),
               child: const LoginPage(),

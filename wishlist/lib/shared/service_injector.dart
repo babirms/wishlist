@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wishlist/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wishlist/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart';
 import 'package:wishlist/features/products/data/datasources/product_remote_datasource.dart';
@@ -24,14 +26,23 @@ mixin Sl {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    _sl.registerSingleton<AuthLocalDatasource>(
+        AuthLocalDatasource(sharedPreferences: sharedPreferences));
+
     _sl.registerSingleton<AuthRemoteDataSource>(
       AuthRemoteDataSource(
         firestore: firestore,
         firebaseAuth: firebaseAuth,
+        localDatasource: _sl(),
       ),
     );
     _sl.registerSingleton<AuthRepository>(
-      AuthRepository(authRemoteDataSource: _sl()),
+      AuthRepository(
+        remoteDataSource: _sl(),
+        localDatasource: _sl(),
+      ),
     );
 
     _sl.registerSingleton<ProductRemoteDataSource>(

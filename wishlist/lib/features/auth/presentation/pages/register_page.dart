@@ -49,10 +49,12 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocListener<RegisterCubit, RegisterState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is RegisterSuccess) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.message)));
+            await Navigator.of(context).pushNamedAndRemoveUntil(
+              '/home',
+              (Route<dynamic> route) => false,
+            );
           } else if (state is RegisterError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));

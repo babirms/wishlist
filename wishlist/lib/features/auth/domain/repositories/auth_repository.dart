@@ -1,17 +1,22 @@
+import 'package:wishlist/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wishlist/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:wishlist/features/auth/data/entities/user_entity.dart';
 
 class AuthRepository {
-  final AuthRemoteDataSource authRemoteDataSource;
+  final AuthRemoteDataSource remoteDataSource;
+  final AuthLocalDatasource localDatasource;
 
-  AuthRepository({required this.authRemoteDataSource});
+  AuthRepository({
+    required this.remoteDataSource,
+    required this.localDatasource,
+  });
 
   Future<void> signUpWithEmailAndPassword({
     required String email,
     required String password,
     required String name,
   }) async {
-    return await authRemoteDataSource.signUpWithEmailAndPassword(
+    return await remoteDataSource.signUpWithEmailAndPassword(
       email: email,
       password: password,
       name: name,
@@ -20,13 +25,13 @@ class AuthRepository {
 
   Future<UserEntity> login(
       {required String email, required String password}) async {
-    final success = await authRemoteDataSource.loginWithEmailAndPassword(
+    final success = await remoteDataSource.loginWithEmailAndPassword(
       email: email,
       password: password,
     );
 
     if (success) {
-      final user = await authRemoteDataSource.getUserByEmail(email);
+      final user = await remoteDataSource.getUserByEmail(email);
       if (user != null) {
         return user;
       } else {
@@ -38,10 +43,14 @@ class AuthRepository {
   }
 
   Future<void> sendPasswordResetEmail({required String email}) async {
-    return await authRemoteDataSource.sendPasswordResetEmail(email: email);
+    return await remoteDataSource.sendPasswordResetEmail(email: email);
   }
 
   Future<void> logout() async {
-    return await authRemoteDataSource.logout();
+    return await remoteDataSource.logout();
+  }
+
+  Future<UserEntity?> getLocalUser() async {
+    return await localDatasource.getLocalUser();
   }
 }
