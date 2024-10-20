@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wishlist/features/auth/data/entities/user_entity.dart';
@@ -37,7 +38,7 @@ class WishlistApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: (settings) {
         if (settings.name == '/home') {
-          return MaterialPageRoute(
+          return CupertinoPageRoute(
             builder: (context) => MultiBlocProvider(
               providers: [
                 BlocProvider(
@@ -56,25 +57,35 @@ class WishlistApp extends StatelessWidget {
               ),
             ),
           );
+        } else if (settings.name == '/login') {
+          return CupertinoPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => LoginCubit(Sl.get<AuthRepository>()),
+              child: const LoginPage(),
+            ),
+          );
+        } else if (settings.name == '/register') {
+          return CupertinoPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => RegisterCubit(Sl.get<AuthRepository>()),
+              child: const RegisterPage(),
+            ),
+          );
+        } else if (settings.name == '/reset-password') {
+          return CupertinoPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => LoginCubit(Sl.get<AuthRepository>()),
+              child: const ResetPasswordPage(),
+            ),
+          );
         }
+
         return null;
       },
       routes: {
         '/': (context) => BlocProvider(
               create: (context) => SplashCubit(Sl.get<AuthRepository>()),
               child: const SplashPage(),
-            ),
-        '/login': (context) => BlocProvider(
-              create: (context) => LoginCubit(Sl.get<AuthRepository>()),
-              child: const LoginPage(),
-            ),
-        '/register': (context) => BlocProvider(
-              create: (context) => RegisterCubit(Sl.get<AuthRepository>()),
-              child: const RegisterPage(),
-            ),
-        '/reset-password': (context) => BlocProvider(
-              create: (context) => LoginCubit(Sl.get<AuthRepository>()),
-              child: const ResetPasswordPage(),
             ),
       },
     );
