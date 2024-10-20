@@ -16,7 +16,9 @@ class ProductEntity {
 
   factory ProductEntity.fromJson(Map<String, dynamic> json) {
     return ProductEntity(
-      createdAt: json['createdAt'],
+      createdAt: json['createdAt'] is String
+          ? Timestamp.fromDate(DateTime.parse(json['createdAt']))
+          : json['createdAt'] as Timestamp,
       name: json['name'] as String,
       description: json['description'] as String,
       id: json['id'] as String,
@@ -25,7 +27,7 @@ class ProductEntity {
   }
 
   Map<String, dynamic> toJson() => {
-        'createdAt': createdAt,
+        'createdAt': createdAt.toDate().toIso8601String(),
         'name': name,
         'description': description,
         'id': id,

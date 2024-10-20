@@ -3,16 +3,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:wishlist/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wishlist/features/auth/data/entities/user_entity.dart';
+import 'package:wishlist/features/products/data/datasources/product_local_datasource.dart';
 
 class AuthRemoteDataSource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
   final AuthLocalDatasource localDatasource;
+  final ProductLocalDataSource productLocalDataSource;
 
   AuthRemoteDataSource({
     required this.firebaseAuth,
     required this.firestore,
     required this.localDatasource,
+    required this.productLocalDataSource,
   });
 
   Future<void> signUpWithEmailAndPassword({
@@ -115,6 +118,9 @@ class AuthRemoteDataSource {
 
       /// Remove o usuário do cache
       await localDatasource.clearUser();
+
+      /// Remove a lista de produtos do cache
+      await productLocalDataSource.clearProductsList();
     } catch (e) {
       throw Exception('Erro ao realizar o logout: $e');
     }
