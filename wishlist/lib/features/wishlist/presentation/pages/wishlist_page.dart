@@ -9,6 +9,7 @@ import 'package:wishlist/features/wishlist/presentation/widgets/wishlist_item_wi
 import 'package:wishlist/shared/ui/custom_colors.dart';
 import 'package:wishlist/shared/ui/widgets/texts/page_title_widget.dart';
 import 'package:wishlist/shared/ui/widgets/warnings/error_warning_widget.dart';
+import 'package:wishlist/shared/utils/toggle_selection.dart';
 
 class WishlistPage extends StatefulWidget {
   final Function() onAddItemPressed;
@@ -28,16 +29,6 @@ class _WishlistPageState extends State<WishlistPage> {
   final List<ProductEntity> selectedItems = [];
 
   late WishlistEntity currentWishlist;
-
-  void toggleSelection(ProductEntity item) {
-    setState(() {
-      if (selectedItems.contains(item)) {
-        selectedItems.remove(item);
-      } else {
-        selectedItems.add(item);
-      }
-    });
-  }
 
   @override
   void initState() {
@@ -155,8 +146,12 @@ class _WishlistPageState extends State<WishlistPage> {
                               ),
                               title: currentWishlist.productList[index].name,
                               onRemovePressed: isEditingList
-                                  ? () => toggleSelection(
-                                      currentWishlist.productList[index])
+                                  ? () => setState(() {
+                                        toggleSelection(
+                                            selectedItems: selectedItems,
+                                            item: currentWishlist
+                                                .productList[index]);
+                                      })
                                   : null,
                             );
                           },
