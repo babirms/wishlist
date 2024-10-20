@@ -36,7 +36,7 @@ class _PasswordInputWidgetState extends State<PasswordInputWidget> {
       onUnfocus: widget.onUnfocus,
       onChanged: widget.onChanged,
       suffixIcon: IconButton(
-        icon: Icon(isPasswordObscure ? Icons.visibility : Icons.visibility_off),
+        icon: Icon(isPasswordObscure ? Icons.lock_outline : Icons.lock_open),
         onPressed: () {
           setState(() {
             isPasswordObscure = !isPasswordObscure;
