@@ -7,31 +7,34 @@ class WishlistRemoteDataSource {
 
   WishlistRemoteDataSource({required this.firestore});
 
-  Future<WishlistEntity?> getWishlistFromUserId(
-      {required String userId}) async {
+  Future<WishlistEntity> getWishlistFromUserId({required String userId}) async {
     try {
       final wishlist = await firestore.collection('wishlist').doc(userId).get();
 
       if (wishlist.exists) {
         return WishlistEntity.fromJson(wishlist.data() as Map<String, dynamic>);
       } else {
-        return null;
+        return await createWishlist(userId: userId);
       }
     } catch (e) {
       throw Exception('Erro ao buscar a wishlist: $e');
     }
   }
 
-  Future<void> createWishlist(
+  Future<WishlistEntity> createWishlist(
       {required String userId, List<ProductEntity>? productList}) async {
     try {
       /// Cria um documento vazio no firestore
       final doc = await firestore.collection('wishlist').add({});
 
+      /// Cria a wishlist como [WishlistEntity]
+      final wishlist = WishlistEntity(
+          userId: userId, productList: productList ?? [], id: doc.id);
+
       /// Atualiza o documento com uma wishlist no Firestore
-      await updateWishlist(
-          wishlist: WishlistEntity(
-              userId: userId, productList: productList ?? [], id: doc.id));
+      await updateWishlist(wishlist: wishlist);
+
+      return wishlist;
     } catch (e) {
       throw Exception('Erro ao atualizar a wishlist: $e');
     }

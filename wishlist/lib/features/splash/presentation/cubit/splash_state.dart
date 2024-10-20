@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wishlist/features/auth/data/entities/user_entity.dart';
 
 abstract class SplashState extends Equatable {
   @override
@@ -10,10 +11,12 @@ class SplashInitial extends SplashState {}
 class SplashLoading extends SplashState {}
 
 class SplashLocalUserFound extends SplashState {
-  SplashLocalUserFound();
+  final UserEntity user;
+
+  SplashLocalUserFound(this.user);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [user];
 }
 
 class SplashLocaNotlUserFound extends SplashState {

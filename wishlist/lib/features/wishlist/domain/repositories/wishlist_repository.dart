@@ -7,12 +7,11 @@ class WishlistRepository {
 
   WishlistRepository({required this.remoteDataSource});
 
-  Future<WishlistEntity?> getWishlistFromUserId(
-      {required String userId}) async {
+  Future<WishlistEntity> getWishlistFromUserId({required String userId}) async {
     return await remoteDataSource.getWishlistFromUserId(userId: userId);
   }
 
-  Future<void> createWishlist(
+  Future<WishlistEntity> createWishlist(
       {required String userId, List<ProductEntity>? productList}) async {
     return await remoteDataSource.createWishlist(
         userId: userId, productList: productList);

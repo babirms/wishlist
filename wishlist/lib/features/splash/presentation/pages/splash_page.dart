@@ -25,6 +25,7 @@ class _SplashPageState extends State<SplashPage> {
         if (state is SplashLocalUserFound) {
           await Navigator.of(context).pushNamedAndRemoveUntil(
             '/home',
+            arguments: state.user,
             (Route<dynamic> route) => false,
           );
         } else {

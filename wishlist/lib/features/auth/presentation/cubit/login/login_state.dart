@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:wishlist/features/auth/data/entities/user_entity.dart';
 
 abstract class LoginState extends Equatable {
   @override
@@ -10,12 +11,12 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
-  final String message;
+  final UserEntity user;
 
-  LoginSuccess(this.message);
+  LoginSuccess(this.user);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [user];
 }
 
 class LoginError extends LoginState {

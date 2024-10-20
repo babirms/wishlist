@@ -10,8 +10,9 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login({required String email, required String password}) async {
     emit(LoginLoading());
     try {
-      await authRepository.login(email: email, password: password);
-      emit(LoginSuccess('Login realizado com sucesso!'));
+      final loggedUser =
+          await authRepository.login(email: email, password: password);
+      emit(LoginSuccess(loggedUser));
     } catch (e) {
       emit(LoginError('Erro ao fazer login: $e'));
     }

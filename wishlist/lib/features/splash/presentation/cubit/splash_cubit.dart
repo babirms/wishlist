@@ -11,11 +11,10 @@ class SplashCubit extends Cubit<SplashState> {
     emit(SplashLoading());
     try {
       final localUser = await authRepository.getLocalUser();
-      print(localUser);
 
       /// Caso exista um usuário salvo localmente
       if (localUser != null) {
-        emit(SplashLocalUserFound());
+        emit(SplashLocalUserFound(localUser));
       }
 
       /// Caso não exista
@@ -23,7 +22,6 @@ class SplashCubit extends Cubit<SplashState> {
         emit(SplashLocaNotlUserFound());
       }
     } catch (e) {
-      print(e);
       emit(SplashError('Ocorreu um erro ao carregar os dados do usuário.'));
     }
   }

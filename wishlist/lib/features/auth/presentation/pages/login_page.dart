@@ -31,7 +31,8 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) async {
           if (state is LoginSuccess) {
-            await Navigator.of(context).popAndPushNamed('/home');
+            await Navigator.of(context)
+                .popAndPushNamed('/home', arguments: state.user);
           } else if (state is LoginError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));
