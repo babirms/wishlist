@@ -88,7 +88,7 @@ class _ProductListPageState extends State<ProductListPage> {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.only(top: 24, left: 24, right: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,8 @@ class _ProductListPageState extends State<ProductListPage> {
               BlocBuilder<ProductCubit, ProductState>(
                   builder: (context, state) {
                 if (state is ProductLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Expanded(
+                      child: Center(child: CircularProgressIndicator()));
                 } else if (state is ProductSuccess ||
                     state is UpdatedWishlistProductsSuccess) {
                   return Expanded(
