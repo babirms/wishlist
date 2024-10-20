@@ -9,6 +9,7 @@ import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart'
 import 'package:wishlist/features/products/data/datasources/product_remote_datasource.dart';
 import 'package:wishlist/features/products/domain/repositories/product_repository.dart';
 import 'package:wishlist/features/wishlist/data/datasources/wishlist_remote_datasource.dart';
+import 'package:wishlist/features/wishlist/domain/repositories/wishlist_repository.dart';
 import 'package:wishlist/firebase_options.dart';
 
 final _sl = GetIt.instance;
@@ -58,6 +59,9 @@ mixin Sl {
     /// Lista de desejos
     _sl.registerSingleton<WishlistRemoteDataSource>(
       WishlistRemoteDataSource(firestore: firestore),
+    );
+    _sl.registerSingleton<WishlistRepository>(
+      WishlistRepository(remoteDataSource: _sl()),
     );
   }
 }
