@@ -10,6 +10,7 @@ class DefaultInputwWidget extends StatefulWidget {
   final void Function(String)? onChanged;
   final TextInputType? keyboardType;
   final Function()? onUnfocus;
+  final String? forceErrorText;
 
   const DefaultInputwWidget(
       {super.key,
@@ -21,6 +22,7 @@ class DefaultInputwWidget extends StatefulWidget {
       this.suffixIcon,
       this.obscureText = false,
       this.keyboardType,
+      this.forceErrorText,
       this.onUnfocus});
   @override
   State<StatefulWidget> createState() => _DefaultInputwWidgetState();
@@ -52,6 +54,7 @@ class _DefaultInputwWidgetState extends State<DefaultInputwWidget> {
     return Container(
       margin: const EdgeInsets.only(top: 24),
       child: TextFormField(
+        forceErrorText: widget.forceErrorText,
         focusNode: _focusNode,
         onTapOutside: (event) => _focusNode.unfocus(),
         controller: widget.controller,

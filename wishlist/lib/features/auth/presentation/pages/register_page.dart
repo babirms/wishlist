@@ -29,11 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool isValid = false;
 
-  void checkFormValidity() {
-    setState(() {
-      isValid = _formKey.currentState?.validate() ?? false;
-    });
-  }
+  String? isEmailValid;
 
   @override
   void dispose() {
@@ -56,6 +52,10 @@ class _RegisterPageState extends State<RegisterPage> {
               arguments: state.user,
               (Route<dynamic> route) => false,
             );
+          } else if (state is RegisterEmailAlreadyInUseError) {
+            setState(() {
+              isEmailValid = state.errorMessage;
+            });
           } else if (state is RegisterError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));
@@ -81,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Form(
                     key: _formKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       children: [
                         DefaultInputwWidget(
@@ -89,15 +90,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           validator: (value) =>
                               EmptyFieldValidator.validateEmptyField(
                                   nameController.text),
-                          onUnfocus: () => checkFormValidity(),
                         ),
                         DefaultInputwWidget(
                           controller: emailController,
                           label: 'Email',
+                          forceErrorText: isEmailValid,
+                          onChanged: (p0) => setState(() {
+                            isEmailValid = null;
+                          }),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) => EmailValidator.validateEmail(
                               emailController.text),
-                          onUnfocus: () => checkFormValidity(),
                         ),
                         PasswordInputWidget(
                           label: 'Senha',
@@ -105,7 +108,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           validator: (value) =>
                               PasswordValidator.validatePassword(
                                   passwordController.text),
-                          onUnfocus: () => checkFormValidity(),
                         ),
                         PasswordInputWidget(
                           label: 'Confirmar Senha',
@@ -115,19 +117,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             passwordController.text,
                             confirmPasswordController.text,
                           ),
-                          onUnfocus: () => checkFormValidity(),
                         ),
                         const SizedBox(height: 36),
                         PrimaryButtonWidget(
-                          onPressed: isValid
-                              ? () async {
-                                  await context.read<RegisterCubit>().register(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                        name: nameController.text,
-                                      );
-                                }
-                              : null,
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              await context.read<RegisterCubit>().register(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    name: nameController.text,
+                                  );
+                            }
+                          },
                           label: 'Cadastrar',
                         ),
                       ],

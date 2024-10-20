@@ -27,3 +27,12 @@ class RegisterError extends RegisterState {
   @override
   List<Object?> get props => [errorMessage];
 }
+
+class RegisterEmailAlreadyInUseError extends RegisterState {
+  final String errorMessage;
+
+  RegisterEmailAlreadyInUseError(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
+}

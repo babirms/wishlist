@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:wishlist/features/auth/data/datasources/auth_local_datasource.dart';
 import 'package:wishlist/features/auth/data/entities/user_entity.dart';
+import 'package:wishlist/features/auth/data/exceptions/auth_exception.dart';
 import 'package:wishlist/features/products/data/datasources/product_local_datasource.dart';
 
 class AuthRemoteDataSource {
@@ -17,6 +18,9 @@ class AuthRemoteDataSource {
     required this.localDatasource,
     required this.productLocalDataSource,
   });
+
+  AuthException throwGenericAuthException() => AuthException(
+      'Ocorreu um erro desconhecido. Tente novamente mais tarde.');
 
   Future<UserEntity> signUpWithEmailAndPassword({
     required String email,
@@ -47,10 +51,16 @@ class AuthRemoteDataSource {
 
         return user;
       } else {
-        throw Exception('Erro ao criar usuário');
+        throw throwGenericAuthException();
       }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        throw EmailAlreadyInUseException();
+      }
+
+      throw throwGenericAuthException();
     } catch (e) {
-      throw Exception('Erro ao criar usuário: $e');
+      throw throwGenericAuthException();
     }
   }
 
