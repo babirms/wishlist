@@ -28,6 +28,15 @@ class LoginError extends LoginState {
   List<Object?> get props => [errorMessage];
 }
 
+class LoginInvalidCredentialsError extends LoginState {
+  final String errorMessage;
+
+  LoginInvalidCredentialsError(this.errorMessage);
+
+  @override
+  List<Object?> get props => [errorMessage];
+}
+
 class ResetPasswordLoading extends LoginState {}
 
 class ResetPasswordSuccess extends LoginState {

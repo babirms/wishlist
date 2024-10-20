@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:wishlist/features/auth/data/exceptions/auth_exception.dart';
 import 'package:wishlist/features/auth/domain/repositories/auth_repository.dart';
 import 'package:wishlist/features/auth/presentation/cubit/login/login_state.dart';
 
@@ -14,7 +15,11 @@ class LoginCubit extends Cubit<LoginState> {
           await authRepository.login(email: email, password: password);
       emit(LoginSuccess(loggedUser));
     } catch (e) {
-      emit(LoginError('Erro ao fazer login: $e'));
+      if (e is InvalidCredentialException) {
+        emit(LoginInvalidCredentialsError(e.message));
+      } else {
+        emit(LoginError('Erro ao fazer login: $e'));
+      }
     }
   }
 

@@ -86,13 +86,20 @@ class AuthRemoteDataSource {
       }
 
       /// Caso o usuário esteja cadastrado no [FirebaseAuth], mas não esteja no [Firestore]
-      /// ocorreu um erro no processo de cadastro
+      /// ocorreu um erro no processo de cadastro e uma mensagem de erro vai
+      /// ser exibida
       else {
-        throw Exception('Erro ao fazer login: Usuário não encontrado na base');
+        throw InvalidCredentialException();
       }
       return userCredential.user != null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-credential') {
+        throw InvalidCredentialException();
+      }
+
+      throw throwGenericAuthException();
     } catch (e) {
-      throw Exception('Erro ao fazer login: $e');
+      throw throwGenericAuthException();
     }
   }
 

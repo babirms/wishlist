@@ -33,6 +33,9 @@ class _LoginPageState extends State<LoginPage> {
           if (state is LoginSuccess) {
             await Navigator.of(context)
                 .popAndPushNamed('/home', arguments: state.user);
+          } else if (state is LoginInvalidCredentialsError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.errorMessage)));
           } else if (state is LoginError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.errorMessage)));

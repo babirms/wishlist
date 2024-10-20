@@ -8,10 +8,6 @@ class EmailAlreadyInUseException extends AuthException {
   EmailAlreadyInUseException() : super('Esse email já está em uso. ');
 }
 
-class UserNotFoundException extends AuthException {
-  UserNotFoundException() : super('Este email não está cadastrado.');
-}
-
 class PasswordResetFailedException extends AuthException {
   PasswordResetFailedException()
       : super('Falha ao enviar email de redefinição de senha.');
